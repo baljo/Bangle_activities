@@ -100,7 +100,9 @@ This consists of two steps:
 
 #### 3.1 Configure the CSV-Wizard
 
-Here you'll use one of your activity files as an example model to let the wizard know how the file is structured. This configuration only needs to be done once. 
+Here you'll use one of your activity files as an example model to let the wizard know how the file is structured. This configuration only needs to be done once. Documentation for the CSV-Wizard is found [here](https://docs.edgeimpulse.com/docs/edge-impulse-studio/data-acquisition/csv-wizard).
+
+For this project I've used the following steps:
 - Click on `Data acquisition`
 - Click on `CSV-Wizard`
 - Click on `Choose File`, select any of your activity files, and click `Upload file`
@@ -117,6 +119,15 @@ Here you'll use one of your activity files as an example model to let the wizard
 - Now you are in Step 4, fill in it like this:
     - **Do you have a column that contains the label (the value you want to predict)?** `Yes, it's <activity>`
     - **Which columns contain your values?** `<x, y, z>`
+- Click `Next, split up into samples`
+- In this Step 5, use these settings:
+    - **How long do you want your samples to be?** `Limit to <3040> ms`
+    - **How should we deal with multiple labels in a sample?** `Use the last value of "activity" as the label for each sample...`
+- Click `Finish wizard`
+
+#### 3.2 Upload Activity Files Using the CSV-Wizard
+
+Now you can upload all activity files, including the one you used to configure the CSV-Wizard, to Edge Impulse. See the [documentation](https://docs.edgeimpulse.com/docs/edge-impulse-studio/data-acquisition/uploader) for detailed steps.
 
 
 
