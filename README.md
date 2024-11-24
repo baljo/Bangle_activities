@@ -12,7 +12,7 @@ Overwhelming evidence exists that lifelong exercise is associated with a longer 
 
 Some of us happily exercise without any technology whatsoever and just listen to our body. Others, like me, are motivated (sometimes perhaps obsessed) by following statistics and trends collected by smartwatches or smartrings. Any decent smartwatch today uses GPS, accelerometer, gyrometer and other sensors to collect different types of data and consolidates this data into activity summaries. They perform exceptionally well with correctly classifying long repetetive exercises like running and walking outdoors or on a treadmill, skiing, cycling, rowing, etc. Where many of them still have room for improvement though, is correctly classifying the many different activities you might be performing in a gym. I've been a Garmin fan for over 10 years, and is is currently on my fourth Garmin sport watch, not anyone of them can consistently correctly classify gym activities, even if all of the watches are considered premium sport watches.
 
-Since I last winter started working out with my three decades old Kettler Sport Variant home gym, it bothered me that I needed to constantly switch activities on my Garmin watch when I changed from one activity to another. Especially as I like to avoid longer monotonous repetitions. This made me wonder if I with machine learning can do better than the big boys. Since I from before have experience with using Tensorflow Lite on the affordable smartwatch Bangle.js, I thought I could at least try.
+Since I last winter started working out with my three decades old Kettler Sport Variant home gym, it bothered me that I needed to constantly switch activities on my Garmin watch when I changed from one activity to another, especially  as I like to avoid longer monotonous repetitions. This made me wonder if I with machine learning can do better than the big boys. Since I from before have experience with using Tensorflow Lite on the affordable smartwatch Bangle.js, I thought I could at least try.
 
 The result is an app where you first collect exercise training data for export to Edge Impulse, and after uploading a trained ML-model just click on Exercise to let the watch classify all different exercises you're performing and the length of them. Afterwards you can upload the collected data to e.g. Excel for further analysis or storage.
 
@@ -66,9 +66,24 @@ The result is an app where you first collect exercise training data for export t
 
 ![](/images/Bangle-Exerc-03.jpg)
 
-## Training and Building the Model
+## Building and Training the Model
 
+Building and training a ML-model in this project consist of following major steps:
+1. Downloading the recorded activity files to your computer
+2. Creating an Edge Impulse project
+3. Uploading the activity files to Edge Impulse
+4. Creating and training the model
 
+### 1. Download the Activity Files
+
+- In the Espruino IDE, click on the `Storage` icon
+
+![](/images/Espr_IDE-15.jpg)
+
+- Your activity files start with ´acti_...` followed by a timestamp when the file was created.
+- For one activity file at a time, click on the `Save` icon to save the file to a selected folder.  
+
+![](/images/Espr_IDE-20.jpg)
 
 
 
