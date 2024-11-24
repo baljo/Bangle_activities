@@ -4,9 +4,7 @@
 
 This tutorial shows how you can utilize Edge Impulse to classify different exercises or daily activities you are doing. The hardware used in this project is the Bangle.js 2 programmable smartwatch, but any other programmable smartwatch with an accelerometer can be used as long as they support Tensorflow Lite.
 
-![](/Images/Bangle-01.jpg)
-
-![aa](/images/Bangle-01.jpg)
+![](/images/Bangle-01.jpg)
 
 ## Use-case explanation
 
