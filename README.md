@@ -81,9 +81,43 @@ Building and training a ML-model in this project consist of following major step
 ![](/images/Espr_IDE-15.jpg)
 
 - Your activity files start with ´acti_...` followed by a timestamp when the file was created.
-- For one activity file at a time, click on the `Save` icon to save the file to a selected folder.  
+- For one activity file at a time, click on the `Save` icon.  
 
 ![](/images/Espr_IDE-20.jpg)
+
+- Files will be stored in your Downloads-folder on your computer
+- Files will be in CSV-format, but have an ` (StorageFile)`-appendix that you'll need to remove. So, rename `acti_2024_10_29_20_03.csv (StorageFile)` to `acti_2024_10_29_20_03.csv`.
+
+### 2. Create an Edge Impulse Project
+
+- Head over to Edge Impulse, and create a object classification project. If you are completely new to the platform, check out their [getting started tutorial](https://docs.edgeimpulse.com/docs/readme/for-beginners#getting-started-in-a-few-steps).
+
+### 3. Upload the Activity Files
+
+This consists of two steps:
+- 3.1 Configure the CSV-Wizard
+- 3.2 Uploading the activity files themselves
+
+#### 3.1 Configure the CSV-Wizard
+
+Here you'll use one of your activity files as an example model to let the wizard know how the file is structured. This configuration only needs to be done once. 
+- Click on `Data acquisition`
+- Click on `CSV-Wizard`
+- Click on `Choose File`, select any of your activity files, and click `Upload file`
+- Check that you have the following columns: 
+    - Row #, timestamp, x, y, z, activity
+    - Click `Looks good, next`
+- Fill in the screen like this:
+    - **Is this time-series data?:** `Yes, this is time-series data...`
+    - **How is your time-series data formatted?:** `Each row contains a reading, and sensor values are columns.`
+    - **Do you have a timestamp or time elapsed column?:**  `Yes, it's <timestamp>`
+    - **What type of data is in your timestamp column?:** `Time elapsed in milliseconds`
+    - **Override timestamp difference?:** `80 ms` (the default accelerometer is 12.5 Hz which means one sample is 80 ms in length)
+- Click `Great, let's look at your values`
+- Now you are in Step 4, fill in it like this:
+    - **Do you have a column that contains the label (the value you want to predict)?** `Yes, it's <activity>`
+    - **Which columns contain your values?** `<x, y, z>`
+
 
 
 
