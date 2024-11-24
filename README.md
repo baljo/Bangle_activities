@@ -6,6 +6,8 @@ This tutorial shows how you can utilize Edge Impulse to classify different exerc
 
 ![](/Images/Bangle-01.jpg)
 
+![aa](/images/Bangle-01.jpg)
+
 ## Use-case explanation
 
 Overwhelming evidence exists that lifelong exercise is associated with a longer health span, delaying the onset of [40](https://perspectivesinmedicine.cshlp.org/content/8/7/a029694.short) chronic conditions/diseases. The health benefits of doing regular exercise have been shown in many studies. Just to pick [one of them](https://www.kheljournal.com/archives/2016/vol3issue5/PartA/3-4-55-201.pdf) which mentions that physical activity and exercise can reduce stress and anxiety, boost happy chemicals, improve self-confidence, increase the brain power, sharpen the memory and increase our muscles and bones strength. It also helps in preventing and reducing heart disease, obesity, blood sugar fluctuations, cardiovascular diseases and cancer.
