@@ -129,9 +129,9 @@ For this project I've used the following steps:
 
 Now you can upload all activity files, including the one you used to configure the CSV-Wizard, to Edge Impulse. See the [documentation](https://docs.edgeimpulse.com/docs/edge-impulse-studio/data-acquisition/uploader) for detailed steps.
 
-### 4. Creating, Training, and Testing the Model
+### 4. Creating, Training, and Testing the Model in Edge Impulse
 
-This consists of a few steps:
+This consists of a few steps, all done within Edge Impulse:
 - 4.1 Create an impulse
 - 4.2 Generate features
 - 4.3 Train the model
@@ -139,32 +139,124 @@ This consists of a few steps:
 
 #### 4.1 Create an Impulse
 
+Select `Create impulse` from the menu and use these settings:
+
+Time-series data:
+- `Window size 1,000 ms.`
+- `Window increase 500 ms.`
+- `Frequency (Hz) 12.5`
+- `Zero-pad data [x]`
+
+Select `Raw data` as Processing block and `Classification` as Learning block. As Bangle isn't one of the officially supported devices, the other available blocks for accelerometer data would need to be developed in Espruino to work identically as the Edge Impulse ones. I actually tried to replicate the Spectral Analysis processing block, but was not successful.
+
 ![](/images/EI-010.jpg)
+
+#### 4.2 Generate Features
+
+- Select `Raw data` from the menu. 
+- As we're using default settings:
+    - click `Save parameters`
+    - in next screen, click `Generate features`
+- After a couple of minutes you'll see how well the activities can be separated in this stage. As you see I have quite a good separation, only sitting is scattered around, the reason being that I by purpose was not sitting completely still all the time, I did a few different random hand movements.
+
+![](/images/EI-020.jpg)
+
+#### 4.3 Train the Model
+
+- Select `Classifier` from the menu.
+- You are recommended to try different settings, but to start with why not use mine:
+    - `Number of training cycles 700`
+    - `1st dense layer 30 neurons`
+    - `2nd dense layer 15 neurons`
+    - `3rd dense layer 8 neurons`
+- Click `Save & train` to start training
+- My results were fairly good with an accuracy of 95%, to improve the model even further, I'd collect more data.
+
+![](/images/EI-030.jpg)
+
+#### 4.4 Test the Model
+
+This module is testing the ML-model on the test data which was automatically placed aside and not used during the training. The objective is to see how well the model performs with data it has not encountered before, thus simulating use in real-life situations.
+
+- Select `Model testing` from the menu.
+- Click `Classify all`
+- After a while you'll get the results.
+- My results were not as good as in the training, but this is quite often the case. The final verdict of model performance is when you try it in the field, or as in this case, on your hand!  
+
+![](/images/EI-040.jpg)
 
 ## Model Deployment
 
+As mentioned, Bangle is not officially supported by Edge Impulse, so you can't use the Deployment menu option. This doesn't of course stop you as the only thing that really matters is that both Bangle and Edge Impulse support Tensorflow Lite. 
+
+### Do this in **Edge Impulse**:
+
+- Select `Dashboard` from the menu.
+- Click on the `Save` icon after Tensorflow Lite (float32)
+    - This downloads a ML-model file to your computer's downloads folder.
+
+![](/images/EI-050.jpg)
+
+
+### Do this in the **Espruino IDE**:
+- Click on the `Storage` icon
+
+![](/images/Espr_IDE-15.jpg)
+
+- Click `Upload files`
+
+![](/images/Espr_IDE-25.jpg)
+
+- Find the ML-model you downloaded from Edge Impulse
+- Type `impulse1` as file name and click `Ok`. 
+    - FYI: When the Bangle-program is run it will convert the Tensorflow Lite file to base64-format and create an internal file named `impulse4`
+
+![](/images/Espr_IDE-30.jpg)
+
+## Test the Model on the Watch!
+
 Now it's time to test the model in real life!
 
-- Head over to the Deployment tab, and search for 'OpenMV'
+Here you'll use the same program as earlier in Software Configuration, so unless the app is still running on your Bangle, just upload it to RAM once again.
 
-![](/Images/Deployment_compressed.png)
+- When you want to test the app without storing any activity data, just select `Inference`.
 
-- When just testing, and with smaller models like mine, it's ok to use the library option, but for real production usage it's better to build a firmware version.
-- After the build process is completed, instructions are shown for how to deploy the model to the OpenMV camera. With the library option, you just extract the files from the ZIP-file to the camera's memory, while you with the firmware option need to flash the compiled firmware to the camera with help of the OpenMV IDE.
-- When the camera is powered, it automatically runs ```main.py``` from its memory. Ensure this progam has the proper image conversions you used in the capturing phase! 
-- Run the [Python program](/nuts_conveyor/Dobot%20conveyor%20-%20object%20counting.py) or your own version to receive inferencing data from the OpenMV camera. 
-    - Remember that if you want a live video feed, you need to connect a separate camera to your computer
+![](/images/Bangle-Exerc-01.jpg)
 
+- This shows the current activity you are doing, in my case unfortunately sitting...
+- Click wherever on the display to go back.
+
+![](/images/Bangle-Exerc-04.jpg)
+
+- Start exercising (yay!) by selecting `Exercise`.
+- This runs inference as the previous one, but also collects data to a CSV-file.
+- In this app there are no bells and whistles shown on the watch display, feel free to learn Javascript to enhance the Bangle app!
+
+### Download Exercise Data from the Bangle App
+
+Access the Storage again from within Espruino IDE, and download the exercise files (named `exercise` + timestamp when file created)
+
+![](/images/Espr_IDE-35.jpg)
+
+The file contains timestamps when the inferred activity started and ended as well as the activity itself. As you see below, it classified several activities I did. I also simulated rowing, but as I could not use the real rowing machine, it registered it as sitting.
+
+The program registers an activity first after the same activity has been detected for at least 10 seconds. In a real scenario this should probably be increased to 30 seconds or more as you are probably not all the time very quickly swithcing between different activities.
+
+![](/images/Excel-01.jpg)
 
 
 ## Results
 
-The results from this project met the objectives, to be able to count objects with the OpenMV camera, using FOMO. The whole solution is not perfect as the accuracy could be improved by adding more data. The current version is counting all the nuts it identifies, but adding a running total would obviously be beneficial in a production scenario. This needs partially another approach on the Python-side as the conveyor belt would need to be paused, inference run on the camera, before resuming. I tried to implement this, but as the conveyor belt is running completely asynchronously, it is challenging to stop at a given time. As the ML-model itself is technically working perfectly, I decided to leave this improvement for later.
+The results from the Edge Impulse part completely met the objectives and expectations I had, i.e. to accurately enough be able to classify which activity was performed. The training result of 95% can be considered good, especially considering raw data is used. I also tested the spectral features in Edge Impulse, and was not surprised to find that it consistently gave better results with different settings.
 
-![](/Videos/Counting_nuts_with_conveyor_belt.gif)
+On the Bangle app side, the results partially met my objectives. While the watch itself is excellent for its price, I only have basic Javascript skills and was not completely successful in getting the exercise registering logic as good as I'd wanted. One thing that might improve the accuracy somewhat is to change the accelerometer frequency from 12.5 Hz to e.g. 100 Hz, I've tested that this is possible. With help of ChatGPT I also tried to replicate the spectral features in Edge Impulse, but finally needed to leave it out of the scope. The app already now however outperforms my Garmin watch in switching from one activity to another without me taking any actions on the watch. 
+
+As a summary, the concept as such is working, it and there's a prototype of an exercise app that can be improved. As the gym-season starts for me during the dark gloomy months, I'll be able to collect huge amounts of data to strengthen the model.
+
 
 ## Conclusion
 
-The goal of this tutorial was to show how to count objects, using FOMO and the OpenMV Cam RT-1062. As mentioned, the goal was achieved, and while a few technical issues occurred on the conveyor belt side, the overall process was quite straightforward. 
+The goal of this tutorial was to build a ML-model and a corresponding Bangle app that can correctly classify activities, especially the ones done in a gym, and where the user often switch between different activities. As has been demonstrated, this goal was to large parts met.
 
-All the code and files used in this write-up are found from [Github](https://github.com/baljo/count_nuts), the public Edge Impulse project is [here](https://studio.edgeimpulse.com/studio/527570). Feel free to clone the project for your own use case.
+
+All the code and files used in this write-up are found from [Github](https://github.com/baljo/Bangle_activities), the public Edge Impulse project is [here](https://studio.edgeimpulse.com/studio/544247). Feel free to clone the project for your own use case.
