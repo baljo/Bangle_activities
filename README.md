@@ -2,21 +2,24 @@
 
 ## Intro
 
-This tutorial shows how you can utilize Edge Impulse to classify different exercises or daily activities you are doing. The hardware used in this project is the Bangle.js 2 programmable smartwatch, but any other programmable smartwatch with an accelerometer can be used as long as they support Tensorflow Lite.
+This tutorial demonstrates how to use Edge Impulse to classify various exercises or daily activities. This project uses the Bangle.js 2 programmable smartwatch, but any programmable smartwatch with an accelerometer and TensorFlow Lite support can be used.
 
 ![](/images/Bangle-01.jpg)
 
 ## Use-case explanation
 
-Overwhelming evidence exists that lifelong exercise is associated with a longer health span, delaying the onset of [40](https://perspectivesinmedicine.cshlp.org/content/8/7/a029694.short) chronic conditions/diseases. The health benefits of doing regular exercise have been shown in many studies. Just to pick [one of them](https://www.kheljournal.com/archives/2016/vol3issue5/PartA/3-4-55-201.pdf) which mentions that physical activity and exercise can reduce stress and anxiety, boost happy chemicals, improve self-confidence, increase the brain power, sharpen the memory and increase our muscles and bones strength. It also helps in preventing and reducing heart disease, obesity, blood sugar fluctuations, cardiovascular diseases and cancer.
+Extensive evidence suggests that lifelong exercise extends health span and delays the onset of [40](https://perspectivesinmedicine.cshlp.org/content/8/7/a029694.short) chronic conditions and diseases. The health benefits of doing regular exercise have been shown in many studies. 
+For instance, [one study](https://www.kheljournal.com/archives/2016/vol3issue5/PartA/3-4-55-201.pdf) highlights how physical activity reduces stress and anxiety, boosts mood, improves self-confidence, sharpens memory, and strengthens muscles and bones. It also helps in preventing and reducing heart disease, obesity, blood sugar fluctuations, cardiovascular diseases and cancer.
 
-Some of us happily exercise without any technology whatsoever and just listen to our body. Others, like me, are motivated (sometimes perhaps obsessed) by following statistics and trends collected by smartwatches or smartrings. Any decent smartwatch today uses GPS, accelerometer, gyrometer and other sensors to collect different types of data and consolidates this data into activity summaries. They perform exceptionally well with correctly classifying long repetetive exercises like running and walking outdoors or on a treadmill, skiing, cycling, rowing, etc. Where many of them still have room for improvement though, is correctly classifying the many different activities you might be performing in a gym. I've been a Garmin fan for over 10 years, and is is currently on my fourth Garmin sport watch, not anyone of them can consistently correctly classify gym activities, even if all of the watches are considered premium sport watches.
+While some of us exercise intuitively without technology, others, like me, find motivation in tracking statistics and trends using devices like smartwatches or smart rings. Any decent smartwatch today uses GPS, accelerometer, gyrometer and other sensors to collect different types of data and consolidates this data into activity summaries. They perform exceptionally well with correctly classifying long repetetive exercises like running and walking outdoors or on a treadmill, skiing, cycling, rowing, etc. Where several of them still have room for improvement though, is correctly classifying the many different activities you might be performing in a gym. I've been a Garmin fan for over 10 years, and is is currently on my fourth Garmin sport watch, not anyone of them can consistently correctly classify gym activities, even if all of the watches are considered premium sport watches.
+
+![](/images/Kettler%20Sport%20Variant%2003.jpg)
 
 Since I last winter started working out with my three decades old Kettler Sport Variant home gym, it bothered me that I needed to constantly switch activities on my Garmin watch when I changed from one activity to another, especially  as I like to avoid longer monotonous repetitions. This made me wonder if I with machine learning can do better than the big boys. Since I from before have experience with using Tensorflow Lite on the affordable smartwatch Bangle.js, I thought I could at least try.
 
 The result is an app where you first collect exercise training data for export to Edge Impulse, and after uploading a trained ML-model just click on Exercise to let the watch classify all different exercises you're performing and the length of them. Afterwards you can upload the collected data to e.g. Excel for further analysis or storage.
 
-![](/images/Kettler%20Sport%20Variant%2003.jpg)
+
 
 
 ## Components and Hardware/Software Configuration
@@ -27,11 +30,13 @@ The result is an app where you first collect exercise training data for export t
 - A computer supporting Bluetooth Low Energy (BLE). More or less any computer manufactured the last decade is equipped with BLE, but there are also BLE-adapters with USB-connector for older computers.
 - Depending on the activities you plan to do, you might need shoes for walking/running outdoors, gym equipment, kettle bells etc. If you go to a gym, they probably have all the exercise equipment you need.
 
+![](/images/Bangle-02_compr.jpg)
+
 
 ### Hardware and Software Configuration
 
 #### Hardware Configuration
-- There's practically nothing to configure hardware wise! While Bangle is not in same premium class as e.g. Apple or Samsung watches, the initial experience is quite similar, most often everything just works out of the box and it's easy to get started. Do read the [Getting Started guide](https://banglejs.com/start2).
+- There's practically nothing to configure hardware wise! Although Bangle isn't in the same premium class as Apple or Samsung watches, the initial experience is quite similar—everything usually works seamlessly out of the box, making it easy to get started. Do read the [Getting Started guide](https://banglejs.com/start2).
 
 #### Software Configuration
 
@@ -81,7 +86,7 @@ Building and training a ML-model in this project consist of following major step
 ![](/images/Espr_IDE-15.jpg)
 
 - Your activity files start with ´acti_...` followed by a timestamp when the file was created.
-- For one activity file at a time, click on the `Save` icon.  
+- Click the `Save` icon for each activity file individually.  
 
 ![](/images/Espr_IDE-20.jpg)
 
@@ -139,7 +144,7 @@ This consists of a few steps, all done within Edge Impulse:
 
 #### 4.1 Create an Impulse
 
-Select `Create impulse` from the menu and use these settings:
+In Edge Impulse, navigate to `Create impulse` and configure the following settings:
 
 Time-series data:
 - `Window size 1,000 ms.`
@@ -240,7 +245,7 @@ Access the Storage again from within Espruino IDE, and download the exercise fil
 
 The file contains timestamps when the inferred activity started and ended as well as the activity itself. As you see below, it classified several activities I did. I also simulated rowing, but as I could not use the real rowing machine, it registered it as sitting.
 
-The program registers an activity first after the same activity has been detected for at least 10 seconds. In a real scenario this should probably be increased to 30 seconds or more as you are probably not all the time very quickly swithcing between different activities.
+The program registers an activity only after detecting the same activity for at least 10 seconds. In a real scenario this should probably be increased to 30 seconds or more as you are probably not all the time very quickly swithcing between different activities.
 
 ![](/images/Excel-01.jpg)
 
@@ -249,20 +254,20 @@ The program registers an activity first after the same activity has been detecte
 
 The results from the Edge Impulse part completely met the objectives and expectations I had, i.e. to accurately enough be able to classify which activity was performed. The training result of 95% can be considered good, especially considering raw data is used. I also tested the spectral features in Edge Impulse, and was not surprised to find that it consistently gave better results with different settings.
 
-On the Bangle app side, the results partially met my objectives. While the watch itself is excellent for its price, I only have basic Javascript skills and was not completely successful in getting the exercise registering logic as good as I'd wanted.
+As for the Bangle app, the results only partially met my objectives. While the watch itself is excellent for its price point, I only have basic Javascript skills and was not completely successful in getting the exercise registering logic as good as I'd wanted. Testing the app during exercises is also in practice somewhat challenging as you can't easily watch the inferred activity while performing it!
 
 ### Improvement Suggestions
 
-One thing that might improve the accuracy somewhat is to change the accelerometer frequency from 12.5 Hz to e.g. 100 Hz, I've tested that this is possible. With help of ChatGPT I also tried to replicate the spectral features in Edge Impulse, but finally needed to leave it out of the scope. The app already now however outperforms my Garmin watch in switching from one activity to another without me taking any actions on the watch. Another, quite straightforward improvement, is to make the app a real Bangle app, this can be done by following the steps in the paragraph *Making an App* [here](https://www.espruino.com/Bangle.js+First+App). 
+One thing that might improve the accuracy somewhat is to change the accelerometer frequency from 12.5 Hz to e.g. 100 Hz, I've tested that this is possible. With help of ChatGPT I also tried to replicate the spectral features in Edge Impulse, but finally needed to leave it out of the scope. The app already now however outperforms my Garmin watch in switching from one activity to another without me taking any actions on the watch. Another, quite straightforward improvement, is to make the app a real Bangle app, this can be done by following the steps in the paragraph *Making an App* [here](https://www.espruino.com/Bangle.js+First+App). New features can of course be added to the app, heart rate data, steps, altitude etc, but then 
 
 
 
-As a summary, the concept as such is working, it and there's a prototype of an exercise app that can be improved. As the gym-season starts for me during the dark gloomy months, I'll be able to collect huge amounts of data to strengthen the model.
+As a summary, the concept as such is working, it and there's a prototype of an exercise app that can be improved. As the gym season begins during the dark winter months, I plan to collect extensive data to further improve the model.
 
 
 ## Conclusion
 
-The goal of this tutorial was to build a ML-model and a corresponding Bangle app that can correctly classify activities, especially the ones done in a gym, and where the user often switch between different activities. As has been demonstrated, this goal was to large parts met.
+This tutorial aimed to build a machine learning model and a corresponding Bangle app capable of accurately classifying activities, particularly those performed in a gym, where users frequently switch between different exercises. As has been demonstrated, this goal was to large parts met.
 
 
 All the code and files used in this write-up are found from [Github](https://github.com/baljo/Bangle_activities), the public Edge Impulse project is [here](https://studio.edgeimpulse.com/studio/544247). Feel free to clone the project for your own use case.
