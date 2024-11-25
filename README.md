@@ -40,7 +40,7 @@ The result is an app where you first collect exercise training data for export t
 
 ![](/images/Espr_IDE-10.jpg)
 
-- Click on the `RAM`-button to upload the program to the watch. Bangle has both volatile RAM-memory as well as flash-memory for long-term storage. RAM content disappears after power-down, while content in flash remains after power-down. When testing and developing, it is safer to just upload to RAM as possible serious program crashes won't mess up the watch that much as if you save to flash. That said, it is close to impossible to completely brick the watch with a buggy program, a factory reset should help in almost all cases.
+- Click on the `RAM`-button to upload the program to the watch. Bangle has both volatile RAM-memory as well as flash-memory for long-term storage. RAM content disappears after power-down, while content in flash remains. When testing and developing, it is safer to just upload to RAM as possible serious program crashes won't mess up the watch that much as if you save to flash. That said, it is close to impossible to completely brick the watch with a buggy program, a factory reset should help in almost all cases.
 - You'll be presented with a simple menu with three options:
     - `Collect Data`    - collect data for different activities
     - `Inference`       - run inference to test the current ML-model without storing any further data
@@ -249,7 +249,13 @@ The program registers an activity first after the same activity has been detecte
 
 The results from the Edge Impulse part completely met the objectives and expectations I had, i.e. to accurately enough be able to classify which activity was performed. The training result of 95% can be considered good, especially considering raw data is used. I also tested the spectral features in Edge Impulse, and was not surprised to find that it consistently gave better results with different settings.
 
-On the Bangle app side, the results partially met my objectives. While the watch itself is excellent for its price, I only have basic Javascript skills and was not completely successful in getting the exercise registering logic as good as I'd wanted. One thing that might improve the accuracy somewhat is to change the accelerometer frequency from 12.5 Hz to e.g. 100 Hz, I've tested that this is possible. With help of ChatGPT I also tried to replicate the spectral features in Edge Impulse, but finally needed to leave it out of the scope. The app already now however outperforms my Garmin watch in switching from one activity to another without me taking any actions on the watch. 
+On the Bangle app side, the results partially met my objectives. While the watch itself is excellent for its price, I only have basic Javascript skills and was not completely successful in getting the exercise registering logic as good as I'd wanted.
+
+### Improvement Suggestions
+
+One thing that might improve the accuracy somewhat is to change the accelerometer frequency from 12.5 Hz to e.g. 100 Hz, I've tested that this is possible. With help of ChatGPT I also tried to replicate the spectral features in Edge Impulse, but finally needed to leave it out of the scope. The app already now however outperforms my Garmin watch in switching from one activity to another without me taking any actions on the watch. Another, quite straightforward improvement, is to make the app a real Bangle app, this can be done by following the steps in the paragraph *Making an App* [here](https://www.espruino.com/Bangle.js+First+App). 
+
+
 
 As a summary, the concept as such is working, it and there's a prototype of an exercise app that can be improved. As the gym-season starts for me during the dark gloomy months, I'll be able to collect huge amounts of data to strengthen the model.
 
