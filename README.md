@@ -260,7 +260,7 @@ As for the Bangle app, the results only partially met my objectives. While the w
 
 One thing that might improve the accuracy somewhat is to change the accelerometer frequency from 12.5 Hz to e.g. 100 Hz, I've tested that this is possible. With help of ChatGPT I also tried to replicate the spectral features in Edge Impulse, but finally needed to leave it out of the scope. The app already now however outperforms my Garmin watch in switching from one activity to another without me taking any actions on the watch. Another, quite straightforward improvement, is to make the app a real Bangle app, this can be done by following the steps in the paragraph *Making an App* [here](https://www.espruino.com/Bangle.js+First+App). New features can of course be added to the app, heart rate data, steps, altitude etc, but then 
 
-
+![](/images/Espr_IDE-40.jpg)
 
 As a summary, the concept as such is working, it and there's a prototype of an exercise app that can be improved. As the gym season begins during the dark winter months, I plan to collect extensive data to further improve the model.
 
