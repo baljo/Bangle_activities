@@ -129,8 +129,17 @@ For this project I've used the following steps:
 
 Now you can upload all activity files, including the one you used to configure the CSV-Wizard, to Edge Impulse. See the [documentation](https://docs.edgeimpulse.com/docs/edge-impulse-studio/data-acquisition/uploader) for detailed steps.
 
+### 4. Creating, Training, and Testing the Model
 
+This consists of a few steps:
+- 4.1 Create an impulse
+- 4.2 Generate features
+- 4.3 Train the model
+- 4.4 Test the model
 
+#### 4.1 Create an Impulse
+
+![](/images/EI-010_compr.jpg)
 
 ## Model Deployment
 
