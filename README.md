@@ -262,7 +262,7 @@ One thing that might improve the accuracy somewhat is to change the acceleromete
 
 ![](/images/Espr_IDE-40.jpg)
 
-As a summary, the concept as such is working, it and there's a prototype of an exercise app that can be improved. As the gym season begins during the dark winter months, I plan to collect extensive data to further improve the model.
+As a summary, the concept as such is working, it and there's a prototype of an exercise app that can be improved. As my gym season begins during the dark winter months, I plan to collect extensive data to further improve the model.
 
 
 ## Conclusion
