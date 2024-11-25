@@ -139,7 +139,7 @@ This consists of a few steps:
 
 #### 4.1 Create an Impulse
 
-![](/images/EI-010_compr.jpg)
+![](/images/EI-010.jpg)
 
 ## Model Deployment
 
